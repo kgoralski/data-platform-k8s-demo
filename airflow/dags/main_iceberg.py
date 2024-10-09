@@ -39,7 +39,7 @@ dag = DAG(
 
 submit = SparkKubernetesOperator(
     task_id="main_iceberg_submit",
-    namespace="spark-operator",
+    namespace="kgoralski-experiments",
     application_file="spark/jobs/main_iceberg.yaml",
     kubernetes_conn_id="kubernetes_default",
     do_xcom_push=True,
@@ -48,7 +48,7 @@ submit = SparkKubernetesOperator(
 
 sensor = SparkKubernetesSensor(
     task_id="main_iceberg_monitor",
-    namespace="spark-operator",
+    namespace="kgoralski-experiments",
     application_name="{{ task_instance.xcom_pull(task_ids='main_iceberg_submit')['metadata']['name'] }}",
     kubernetes_conn_id="kubernetes_default",
     dag=dag,
